@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', Arial, sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        color: white;
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    .page {
+        min-height: 100vh;
+        display: none;
+        padding: 30px 15px;
+    }
+
+    .active {
+        display: block;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-top: 30px;
+    }
+
+    .countdown {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .box {
+        background: rgba(0,0,0,0.25);
+        padding: 15px 20px;
+        border-radius: 15px;
+        min-width: 90px;
+    }
+
+    .box span {
+        font-size: 2rem;
+        font-weight: bold;
+        display: block;
+    }
+
+    button {
+        margin-top: 30px;
+        padding: 14px 30px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        background: white;
+        color: #ff5f7e;
+        font-weight: bold;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    /* Celebration */
+    .message {
+        max-width: 600px;
+        margin: 30px auto;
+        background: rgba(0,0,0,0.25);
+        padding: 25px;
+        border-radius: 20px;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    /* Love Page */
+    #lovePage {
+        background: url("images/pic5.jpg") center/cover no-repeat;
+        position: relative;
+    }
+
+    #lovePage::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+    }
+
+    .love-content {
+        position: relative;
+        z-index: 2;
+        margin-top: 30vh;
+    }
+
+    .love-content h1 {
+        font-size: 3.5rem;
+        animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+
+    footer {
+        margin-top: 40px;
+        opacity: 0.8;
+    }
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 : COUNTDOWN -->
+<div id="countdownPage" class="page active">
+    <h1>🎉 Birthday Countdown 🎉</h1>
+    <p>Something special is coming 💖</p>
+
+    <div class="countdown">
+        <div class="box"><span id="days">0</span>Days</div>
+        <div class="box"><span id="hours">0</span>Hours</div>
+        <div class="box"><span id="minutes">0</span>Minutes</div>
+        <div class="box"><span id="seconds">0</span>Seconds</div>
+    </div>
+</div>
+
+<!-- PAGE 2 : CELEBRATION -->
+<div id="celebrationPage" class="page">
+    <h1>🎂 Happy Birthday 🎂</h1>
+
+    <div class="message">
+        Dear SHONU/SWEETU/CUTU/MEETHU/BETUUU/KASUUUU,<br><br>
+On this special day, I just want you to know how important you are to me. You bring happiness, warmth, and meaning into my life every single day. Your presence has a way of making even the simplest moments feel special, and your smile instantly makes everything feel lighter and brighter.
+
+You’ve been my constant source of comfort, strength, and inspiration, always knowing how to lift me up when I need it the most. With you, I’ve learned what genuine care, understanding, and love truly feel like. Every memory we share is something I cherish deeply, and every moment with you is a reminder of how lucky I am to have you in my life.
+        <br><br>
+        You mean everything to me ✨
+    </div>
+
+    <button id="playMusic">▶ Play Music</button><br>
+    <button id="openLove">💖 Open Something Special</button>
+
+    <audio id="music" src="music.mp3" loop></audio>
+</div>
+
+<!-- PAGE 3 : LOVE PAGE -->
+<div id="lovePage" class="page">
+    <div class="love-content">
+        <h1>I LOVEE YOUUU ❤️</h1>
+        <p style="margin-top:20px;font-size:1.2rem;">
+            More than words can ever explain ✨
+        </p>
+    </div>
+</div>
+
+<footer>
+    Made with ❤️ just for you
+</footer>
+
+<script>
+    // 🎯 Birthday: 4 January 2026 (Local Time Safe)
+    const targetDate = new Date(2026,0,4, 0, 0, 0).getTime();
+
+    const countdownPage = document.getElementById("countdownPage");
+    const celebrationPage = document.getElementById("celebrationPage");
+    const lovePage = document.getElementById("lovePage");
+
+    const music = document.getElementById("music");
+    const playMusicBtn = document.getElementById("playMusic");
+    const openLoveBtn = document.getElementById("openLove");
+
+    const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+            clearInterval(timer);
+            countdownPage.classList.remove("active");
+            celebrationPage.classList.add("active");
+            return;
+        }
+
+        document.getElementById("days").innerText =
+            Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").innerText =
+            Math.floor((diff / (1000 * 60 * 60)) % 24);
+        document.getElementById("minutes").innerText =
+            Math.floor((diff / (1000 * 60)) % 60);
+        document.getElementById("seconds").innerText =
+            Math.floor((diff / 1000) % 60);
+    }, 1000);
+
+    playMusicBtn.addEventListener("click", () => {
+        music.play();
+        playMusicBtn.style.display = "none";
+    });
+
+    openLoveBtn.addEventListener("click", () => {
+        celebrationPage.classList.remove("active");
+        lovePage.classList.add("active");
+    });
+</script>
+
+</body>
+</html>
+
